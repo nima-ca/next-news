@@ -2,3 +2,29 @@
   max-width: 128rem;
   margin: 0 auto;
 }
+
+body {
+  --color-primary: #f9f7f7;
+  --color-secondary: #dbe2ef;
+  --color-tertiary: #3f72af;
+  --color-accent: #112d4e;
+}
+
+.dark-mode body {
+  --color-primary: #112d4e;
+  --color-secondary: #dbe2ef;
+  --color-tertiary: #3f72af;
+  --color-accent: #f9f7f7;
+}
+
+.light-mode body {
+  --color-primary: #f9f7f7;
+  --color-secondary: #dbe2ef;
+  --color-tertiary: #3f72af;
+  --color-accent: #112d4e;
+}
+
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+}
