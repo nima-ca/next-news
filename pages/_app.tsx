@@ -4,25 +4,20 @@ import { appWithTranslation } from "next-i18next";
 import Navbar from "../components/Navbar/Nabar";
 import Footer from "../components/Footer/Footer";
 import Head from "next/head";
+import { ThemeProvider } from "../context/ThemeContext";
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <ThemeProvider>
       <Head>
         <title>Newsify</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
       </Head>
       <Navbar />
       <main>
         <Component {...pageProps} />
       </main>
       <Footer />
-    </>
+    </ThemeProvider>
   );
 }
 
