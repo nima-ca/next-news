@@ -1,7 +1,9 @@
 .home {
   @include center;
+  flex-direction: column;
+  stroke: red;
 
-  div {
+  & > :first-child {
     color: var(--color-text-2);
     @include center;
     flex-direction: column;
@@ -24,5 +26,18 @@
         outline: none;
       }
     }
+  }
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+  flex-wrap: wrap;
+  margin: 5rem 0;
+
+  & > svg {
+    scale: 5;
+    color: var(--color-secondary);
   }
 }

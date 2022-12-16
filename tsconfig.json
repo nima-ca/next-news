@@ -21,7 +21,8 @@
     "**/*.tsx",
     "next-i18next.config.js",
     "components/utils/icons/Moon.jsx",
-    "components/utils/icons/Sun.jsx"
+    "components/utils/icons/Sun.jsx",
+    "components/utils/icons/Loading.jsx"
   ],
   "exclude": ["node_modules"]
 }
