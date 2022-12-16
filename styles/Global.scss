@@ -5,6 +5,7 @@
 
 body {
   --color-text: rgb(240, 240, 240);
+  --color-text-2: rgb(22, 22, 22);
   --color-primary: #eb455f;
   --color-secondary: #100720;
   --color-tertiary: #fcffe7;
@@ -13,6 +14,7 @@ body {
 
 .dark-mode body {
   --color-text: rgb(240, 240, 240);
+  --color-text-2: rgb(240, 240, 240);
   --color-primary: #100720;
   --color-secondary: #eb455f;
   --color-tertiary: #131b4b;

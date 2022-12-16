@@ -1,0 +1,14 @@
+.colorMode {
+  margin: 5rem;
+  input {
+    opacity: 0;
+  }
+
+  label {
+    margin-left: -1.5rem;
+    cursor: pointer;
+    svg {
+      scale: 1.5;
+    }
+  }
+}

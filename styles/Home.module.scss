@@ -1,0 +1,28 @@
+.home {
+  @include center;
+
+  div {
+    color: var(--color-text-2);
+    @include center;
+    flex-direction: column;
+
+    h1 {
+      margin: 2rem 0;
+    }
+    input {
+      margin: 1rem 0;
+      width: 45rem;
+      padding: 1rem 1rem;
+      background-color: var(--color-tertiary);
+      border: none;
+      border-bottom: 1px solid var(--color-text-2);
+      caret-color: var(--color-text-2);
+      font-size: 1.8rem;
+      color: var(--color-text-2);
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

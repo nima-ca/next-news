@@ -1,3 +1,4 @@
+import Theme from "../Theme/Theme";
 import { NewsifyLogo } from "../utils/icons/NewsifyLogo";
 import styles from "./Navbar.module.scss";
 
@@ -9,7 +10,7 @@ const Navbar = () => {
           <span>Newsify</span>
           <NewsifyLogo />
         </h3>
-        <img src="" alt="" />
+        <Theme />
       </nav>
     </>
   );
