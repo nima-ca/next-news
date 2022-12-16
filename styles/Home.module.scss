@@ -3,6 +3,12 @@
   flex-direction: column;
   stroke: red;
 
+  & > svg {
+    scale: 5;
+    color: var(--color-secondary);
+    margin: 15rem 0;
+  }
+
   & > :first-child {
     color: var(--color-text-2);
     @include center;
@@ -36,8 +42,7 @@
   flex-wrap: wrap;
   margin: 5rem 0;
 
-  & > svg {
-    scale: 5;
-    color: var(--color-secondary);
+  p {
+    color: var(--color-text-2);
   }
 }

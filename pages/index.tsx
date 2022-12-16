@@ -2,10 +2,10 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { GetServerSideProps } from "next";
 import styles from "../styles/Home.module.scss";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import Card from "../components/Card/Card";
 import { Loading } from "../components/utils/icons/Loading";
-import { News } from "../components/interfaces/News";
+import useFetch from "../hooks/useFetch";
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
@@ -17,49 +17,38 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   };
 };
 
-const baseUrl = "https://newsapi.org/v2/everything?";
-
 export default function HomePage(props: any) {
   const { t } = useTranslation();
   const [search, setSearch] = useState("bitcoin");
+  const [pageNumber, setPageNumber] = useState(1);
+  const { articles, error, isLoading, hasMore } = useFetch(
+    search,
+    `${pageNumber}`,
+    props.locale ?? "en",
+    props.apiKey
+  );
 
-  const [data, setData] = useState<News | null>(null);
-  const [isLoading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const isSearchEmpty = search == "";
 
-  const fetchData = async () => {
-    try {
-      setError(null);
-      setLoading(true);
-      const response = await fetch(
-        baseUrl +
-          new URLSearchParams({
-            q: search,
-            pageSize: "10",
-            page: "1",
-            language: props.locale ?? "en",
-          }),
-        {
-          headers: {
-            Authorization: props.apiKey,
-          },
-        }
-      );
-      const data = await response.json();
-      setData(data);
-      setLoading(false);
-    } catch (error: any) {
-      setLoading(false);
-      setError(error);
-    }
+  const changeSearchHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+    setPageNumber(1);
   };
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (search != "") fetchData();
-    }, 1000);
-    return () => clearTimeout(delayDebounceFn);
-  }, [search]);
+  const observer = useRef<any>();
+  const lastArticle = useCallback(
+    (node: any) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          setPageNumber((curr) => curr + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
 
   return (
     <div className={`${styles.home} container`}>
@@ -71,32 +60,32 @@ export default function HomePage(props: any) {
           id="search"
           value={search}
           placeholder={t("search_placeholder")!}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={changeSearchHandler}
         />
       </div>
-
       <div className={styles.cardContainer}>
-        {isLoading && !error && <Loading />}
-        {(search == "" || !data?.articles || data.articles.length == 0) &&
-          !isLoading &&
-          t("not_found")}
-        {!isLoading &&
-          !error &&
-          search != "" &&
-          data!.articles.map((article, index) => (
-            <Card
+        {(isSearchEmpty || articles.length == 0) && !isLoading && (
+          <p>{t("not_found")}</p>
+        )}
+        {!error &&
+          !isSearchEmpty &&
+          articles.map((article, index) => (
+            <div
               key={index}
-              date={article.publishedAt}
-              title={article.title}
-              description={article.description}
-              url={article.url}
-              img={article.urlToImage}
-              source={article.source.name}
-            />
+              ref={index + 1 === articles.length ? lastArticle : null}
+            >
+              <Card
+                date={article.publishedAt}
+                title={article.title}
+                description={article.description}
+                url={article.url}
+                img={article.urlToImage}
+                source={article.source.name}
+              />
+            </div>
           ))}
-
-        {error && <p>{error.message}</p>}
       </div>
+      {isLoading && !error && <Loading />}
     </div>
   );
 }

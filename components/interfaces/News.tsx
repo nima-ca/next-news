@@ -1,6 +1,8 @@
 export interface News {
   articles: NewsItem[];
   status: string;
+  message?: string;
+  totalResults?: number;
 }
 
 export interface NewsItem {
