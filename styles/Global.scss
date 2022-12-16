@@ -1,0 +1,30 @@
+.container {
+  max-width: 130rem;
+  margin: 0 auto;
+}
+
+body {
+  --color-text: rgb(240, 240, 240);
+  --color-text-2: rgb(22, 22, 22);
+  --color-primary: #eb455f;
+  --color-secondary: #100720;
+  --color-tertiary: #fcffe7;
+  --color-accent: #131b4b;
+}
+
+.dark-mode body {
+  --color-text: rgb(240, 240, 240);
+  --color-text-2: rgb(240, 240, 240);
+  --color-primary: #100720;
+  --color-secondary: #eb455f;
+  --color-tertiary: #131b4b;
+  --color-accent: #fcffe7;
+}
+
+body {
+  color: var(--color-text);
+  background-color: var(--color-tertiary);
+  max-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+}
