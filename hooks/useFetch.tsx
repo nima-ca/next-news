@@ -58,6 +58,7 @@ const useFetch = (
     const delayDebounceFn = setTimeout(() => {
       if (query == "") return;
       fetchData(changeType.byQuery);
+      setArticles([]);
     }, 500);
     return () => clearTimeout(delayDebounceFn);
   }, [query]);

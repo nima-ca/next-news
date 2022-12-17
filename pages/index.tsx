@@ -2,7 +2,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { GetServerSideProps } from "next";
 import styles from "../styles/Home.module.scss";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useRef, useState } from "react";
 import Card from "../components/Card/Card";
 import { Loading } from "../components/utils/icons/Loading";
 import useFetch from "../hooks/useFetch";
@@ -38,13 +38,19 @@ export default function HomePage(props: any) {
   const observer = useRef<any>();
   const lastArticle = useCallback(
     (node: any) => {
+      if (articles.length < 8) return;
       if (isLoading) return;
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          setPageNumber((curr) => curr + 1);
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setPageNumber((curr) => curr + 1);
+          }
+        },
+        {
+          rootMargin: "100px",
         }
-      });
+      );
       if (node) observer.current.observe(node);
     },
     [isLoading, hasMore]
